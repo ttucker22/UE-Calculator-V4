@@ -248,12 +248,13 @@
         </div>
         <button id="calculate">Calculate Impairment</button>
         <div id="result"></div>
-        <div class="options-container" id="optionsContainer">
-            <h2 id="currentCardTitle"></h2>
-            <div id="optionsList"></div>
-            <button id="nextCard">Next</button>
-        </div>
-        <div class="calculators-container" id="calculatorsContainer" style="display: none;">
+    <div class="options-container" id="optionsContainer">
+        <h2 id="currentCardTitle"></h2>
+        <div id="optionsList"></div>
+        <button id="nextCard">Next</button>
+    </div>
+    
+    <div class="calculators-container" id="calculatorsContainer" style="display: none;">
             <h2>Impairment Calculators</h2>
             <div id="calculatorsList"></div>
             <div class="calculator-card">
@@ -977,6 +978,7 @@ calculateBtn.addEventListener('click', () => {
         showOptionsForCard(selectedCards[currentCardIndex]);
         optionsContainer.style.display = 'block';
         calculatorsContainer.style.display = 'none';
+        resultDiv.textContent = ''; // Clear any previous messages
     } else {
         resultDiv.textContent = "Please select at least one card.";
     }
