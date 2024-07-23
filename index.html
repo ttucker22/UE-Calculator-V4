@@ -1161,7 +1161,7 @@ const SHOULDERInternalExternalRotationData = [
                             </div>
                             <p class="total-impairment"><strong>Total: <span id="shoulder-arthroplasty-total">0 UE = 0 WPI</span></strong></p>
                         `;
-                        } else if (cardValue === 'shoulder' && option === 'Instability/Subluxation/Dislocation') {
+                    else if (cardValue === 'shoulder' && option === 'Instability/Subluxation/Dislocation') {
                         calculatorCard.innerHTML = `
                             <h3>Shoulder - Instability/Subluxation/Dislocation</h3>
                             <div class="instability-options">
@@ -1180,19 +1180,8 @@ const SHOULDERInternalExternalRotationData = [
                             </div>
                             <p class="total-impairment"><strong>Total: <span id="shoulder-instability-total">0 UE = 0 WPI</span></strong></p>
                         `;
-                    } else {
-                        calculatorCard.innerHTML = `
-                            <h3>${cardValue.charAt(0).toUpperCase() + cardValue.slice(1)} - ${option}</h3>
-                            <div class="input-group">
-                                <label for="${cardValue}-${option}-impairment">Impairment (%):</label>
-                                <input type="number" id="${cardValue}-${option}-impairment" min="0" max="100" step="0.1">
-                            </div>
-                            <div class="input-group">
-                                <label for="${cardValue}-${option}-comments">Comments:</label>
-                                <input type="text" id="${cardValue}-${option}-comments">
-                            </div>
-                        `;
                     }
+                    
                     calculatorsList.appendChild(calculatorCard);
                 });
             }
