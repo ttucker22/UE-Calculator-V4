@@ -248,7 +248,7 @@
         </div>
         <button id="calculate">Calculate Impairment</button>
         <div id="result"></div>
-        <div class="options-container" id="optionsContainer" style="display: none;">
+        <div class="options-container" id="optionsContainer">
             <h2 id="currentCardTitle"></h2>
             <div id="optionsList"></div>
             <button id="nextCard">Next</button>
@@ -967,49 +967,51 @@ const SHOULDERInternalExternalRotationData = [
             });
         });
 
-        calculateBtn.addEventListener('click', () => {
-            console.log("Calculate button clicked");
-            selectedCards = Array.from(document.querySelectorAll('.card.selected')).map(card => card.dataset.value);
-            console.log("Selected cards:", selectedCards);
-            if (selectedCards.length > 0) {
-                currentCardIndex = 0;
-                selectedOptions = {};
-                showOptionsForCard(selectedCards[currentCardIndex]);
-            } else {
-                resultDiv.textContent = "Please select at least one card.";
-            }
-        });
+calculateBtn.addEventListener('click', () => {
+    console.log("Calculate button clicked");
+    selectedCards = Array.from(document.querySelectorAll('.card.selected')).map(card => card.dataset.value);
+    console.log("Selected cards:", selectedCards);
+    if (selectedCards.length > 0) {
+        currentCardIndex = 0;
+        selectedOptions = {};
+        showOptionsForCard(selectedCards[currentCardIndex]);
+        optionsContainer.style.display = 'block';
+        calculatorsContainer.style.display = 'none';
+    } else {
+        resultDiv.textContent = "Please select at least one card.";
+    }
+});
 
-        function showOptionsForCard(cardValue) {
-            console.log("Showing options for:", cardValue);
-            currentCardTitle.textContent = `Options for ${cardValue.charAt(0).toUpperCase() + cardValue.slice(1)}`;
-            optionsList.innerHTML = '';
-            cardOptions[cardValue].forEach(option => {
-                const optionElement = document.createElement('div');
-                optionElement.classList.add('option');
-                optionElement.textContent = option;
-                optionElement.addEventListener('click', () => {
-                    optionElement.classList.toggle('selected');
-                });
-                optionsList.appendChild(optionElement);
-            });
-            optionsContainer.style.display = 'block';
-            calculatorsContainer.style.display = 'none';
-        }
-
-        nextCardBtn.addEventListener('click', () => {
-            console.log("Next button clicked");
-            const cardValue = selectedCards[currentCardIndex];
-            selectedOptions[cardValue] = Array.from(document.querySelectorAll('.option.selected')).map(option => option.textContent);
-            console.log("Selected options:", selectedOptions);
-            
-            currentCardIndex++;
-            if (currentCardIndex < selectedCards.length) {
-                showOptionsForCard(selectedCards[currentCardIndex]);
-            } else {
-                showCalculators();
-            }
+function showOptionsForCard(cardValue) {
+    console.log("Showing options for:", cardValue);
+    currentCardTitle.textContent = `Options for ${cardValue.charAt(0).toUpperCase() + cardValue.slice(1)}`;
+    optionsList.innerHTML = '';
+    cardOptions[cardValue].forEach(option => {
+        const optionElement = document.createElement('div');
+        optionElement.classList.add('option');
+        optionElement.textContent = option;
+        optionElement.addEventListener('click', () => {
+            optionElement.classList.toggle('selected');
         });
+        optionsList.appendChild(optionElement);
+    });
+    optionsContainer.style.display = 'block';
+    calculatorsContainer.style.display = 'none';
+}
+
+nextCardBtn.addEventListener('click', () => {
+    console.log("Next button clicked");
+    const cardValue = selectedCards[currentCardIndex];
+    selectedOptions[cardValue] = Array.from(document.querySelectorAll('.option.selected')).map(option => option.textContent);
+    console.log("Selected options:", selectedOptions);
+    
+    currentCardIndex++;
+    if (currentCardIndex < selectedCards.length) {
+        showOptionsForCard(selectedCards[currentCardIndex]);
+    } else {
+        showCalculators();
+    }
+});
 
 function showCalculators() {
     console.log("Showing calculators");
