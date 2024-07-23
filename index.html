@@ -227,6 +227,8 @@
 <body>
     <div class="container">
         <h1>Upper Extremity Impairment Calculator</h1>
+    <div class="container">
+        <h1>Upper Extremity Impairment Calculator</h1>
         <div class="card-container">
             <div class="card" data-value="shoulder">Shoulder</div>
             <div class="card" data-value="elbow">Elbow</div>
@@ -260,6 +262,9 @@
     </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        console.log("DOM fully loaded");
+                
 // Shoulder Joint Flexion & Extension data
 const SHOULDERFlexionExtensionData = [
     { flexion: '>180', ueFlexion: 0, extension: '<-180', ueExtension: 30, ankylosis: '>180', ueAnkylosis: 30 },
