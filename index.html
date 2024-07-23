@@ -164,64 +164,6 @@
             color: #1E90FF;
             font-weight: bold;
         }
-        .instability-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-.instability-option {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #1E90FF;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-.instability-option:hover {
-    background-color: #F0F8FF;
-}
-.instability-option input[type="radio"] {
-    display: none;
-}
-.instability-option label {
-    cursor: pointer;
-    padding-left: 25px;
-    position: relative;
-    width: 100%;
-}
-.instability-option label::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    border: 2px solid #1E90FF;
-    border-radius: 50%;
-}
-.instability-option input[type="radio"]:checked + label::after {
-    content: '';
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 12px;
-    height: 12px;
-    background-color: #1E90FF;
-    border-radius: 50%;
-}
-.instability-option input[type="radio"]:checked + label {
-    color: #1E90FF;
-    font-weight: bold;
-}
-.instability-option input[type="radio"]:checked + label::before {
-    border-color: #1E90FF;
-}
-.instability-option input[type="radio"]:checked + label::after {
-    background-color: #1E90FF;
-}
         .total-impairment {
             font-weight: bold;
             margin-top: 10px;
@@ -248,13 +190,12 @@
         </div>
         <button id="calculate">Calculate Impairment</button>
         <div id="result"></div>
-<div class="options-container" id="optionsContainer" style="display: none;">
-    <h2 id="currentCardTitle"></h2>
-    <div id="optionsList"></div>
-    <button id="nextCard">Next</button>
-</div>
-    
-    <div class="calculators-container" id="calculatorsContainer" style="display: none;">
+        <div class="options-container" id="optionsContainer" style="display: none;">
+            <h2 id="currentCardTitle"></h2>
+            <div id="optionsList"></div>
+            <button id="nextCard">Next</button>
+        </div>
+        <div class="calculators-container" id="calculatorsContainer" style="display: none;">
             <h2>Impairment Calculators</h2>
             <div id="calculatorsList"></div>
             <div class="calculator-card">
@@ -968,52 +909,49 @@ const SHOULDERInternalExternalRotationData = [
             });
         });
 
-calculateBtn.addEventListener('click', () => {
-    console.log("Calculate button clicked");
-    selectedCards = Array.from(document.querySelectorAll('.card.selected')).map(card => card.dataset.value);
-    console.log("Selected cards:", selectedCards);
-    if (selectedCards.length > 0) {
-        currentCardIndex = 0;
-        selectedOptions = {};
-        showOptionsForCard(selectedCards[currentCardIndex]);
-        optionsContainer.style.display = 'block';
-        calculatorsContainer.style.display = 'none';
-        resultDiv.textContent = ''; // Clear any previous messages
-    } else {
-        resultDiv.textContent = "Please select at least one card.";
-    }
-});
-
-function showOptionsForCard(cardValue) {
-    console.log("Showing options for:", cardValue);
-    currentCardTitle.textContent = `Options for ${cardValue.charAt(0).toUpperCase() + cardValue.slice(1)}`;
-    optionsList.innerHTML = '';
-    cardOptions[cardValue].forEach(option => {
-        const optionElement = document.createElement('div');
-        optionElement.classList.add('option');
-        optionElement.textContent = option;
-        optionElement.addEventListener('click', () => {
-            optionElement.classList.toggle('selected');
+        calculateBtn.addEventListener('click', () => {
+            console.log("Calculate button clicked");
+            selectedCards = Array.from(document.querySelectorAll('.card.selected')).map(card => card.dataset.value);
+            console.log("Selected cards:", selectedCards);
+            if (selectedCards.length > 0) {
+                currentCardIndex = 0;
+                selectedOptions = {};
+                showOptionsForCard(selectedCards[currentCardIndex]);
+            } else {
+                resultDiv.textContent = "Please select at least one card.";
+            }
         });
-        optionsList.appendChild(optionElement);
-    });
-    optionsContainer.style.display = 'block';
-    calculatorsContainer.style.display = 'none';
-}
 
-nextCardBtn.addEventListener('click', () => {
-    console.log("Next button clicked");
-    const cardValue = selectedCards[currentCardIndex];
-    selectedOptions[cardValue] = Array.from(document.querySelectorAll('.option.selected')).map(option => option.textContent);
-    console.log("Selected options:", selectedOptions);
-    
-    currentCardIndex++;
-    if (currentCardIndex < selectedCards.length) {
-        showOptionsForCard(selectedCards[currentCardIndex]);
-    } else {
-        showCalculators();
-    }
-});
+        function showOptionsForCard(cardValue) {
+            console.log("Showing options for:", cardValue);
+            currentCardTitle.textContent = `Options for ${cardValue.charAt(0).toUpperCase() + cardValue.slice(1)}`;
+            optionsList.innerHTML = '';
+            cardOptions[cardValue].forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => {
+                    optionElement.classList.toggle('selected');
+                });
+                optionsList.appendChild(optionElement);
+            });
+            optionsContainer.style.display = 'block';
+            calculatorsContainer.style.display = 'none';
+        }
+
+        nextCardBtn.addEventListener('click', () => {
+            console.log("Next button clicked");
+            const cardValue = selectedCards[currentCardIndex];
+            selectedOptions[cardValue] = Array.from(document.querySelectorAll('.option.selected')).map(option => option.textContent);
+            console.log("Selected options:", selectedOptions);
+            
+            currentCardIndex++;
+            if (currentCardIndex < selectedCards.length) {
+                showOptionsForCard(selectedCards[currentCardIndex]);
+            } else {
+                showCalculators();
+            }
+        });
 
 function showCalculators() {
     console.log("Showing calculators");
@@ -1170,25 +1108,6 @@ function showCalculators() {
                             </div>
                             <p class="total-impairment"><strong>Total: <span id="shoulder-arthroplasty-total">0 UE = 0 WPI</span></strong></p>
                         `;
-} else if (cardValue === 'shoulder' && option === 'Instability/Subluxation/Dislocation') {
-    calculatorCard.innerHTML = `
-        <h3>Shoulder - Instability/Subluxation/Dislocation</h3>
-        <div class="instability-options">
-            <div class="instability-option" data-value="6">
-                <input type="radio" id="class-1-occult" name="shoulder-instability" value="6">
-                <label for="class-1-occult">Class 1 - Occult Instability</label>
-            </div>
-            <div class="instability-option" data-value="12">
-                <input type="radio" id="class-2-subluxating" name="shoulder-instability" value="12">
-                <label for="class-2-subluxating">Class 2 - Subluxating Humeral Head</label>
-            </div>
-            <div class="instability-option" data-value="24">
-                <input type="radio" id="class-3-dislocating" name="shoulder-instability" value="24">
-                <label for="class-3-dislocating">Class 3 - Dislocating Humeral Head</label>
-            </div>
-        </div>
-        <p class="total-impairment"><strong>Total: <span id="shoulder-instability-total">0 UE = 0 WPI</span></strong></p>
-    `;
                     } else {
                         calculatorCard.innerHTML = `
                             <h3>${cardValue.charAt(0).toUpperCase() + cardValue.slice(1)} - ${option}</h3>
@@ -1247,16 +1166,7 @@ function setupCalculatorEventListeners() {
                     console.log("Added event listener to option:", option.value);
                 });
             }
-
-        if (selectedOptions.shoulder && selectedOptions.shoulder.includes('Instability/Subluxation/Dislocation')) {
-            console.log("Setting up instability event listeners");
-            const instabilityOptions = document.querySelectorAll('input[name="shoulder-instability"]');
-            console.log("Number of instability options found:", instabilityOptions.length);
-            instabilityOptions.forEach(option => {
-                option.addEventListener('change', calculateShoulderInstability);
-                console.log("Added event listener to option:", option.value);
-                });
-            }
+        }
 
 function calculateShoulderROM() {
     console.log("Calculating Shoulder ROM");
@@ -1297,20 +1207,6 @@ function calculateShoulderROM() {
             }
         }
 
-        function calculateShoulderInstability() {
-    console.log("calculateShoulderInstability function called");
-    const selectedOption = document.querySelector('input[name="shoulder-instability"]:checked');
-    const totalElement = document.getElementById('shoulder-instability-total');
-    
-    if (selectedOption) {
-        const ueImpairment = parseInt(selectedOption.value);
-        const wpi = Math.round(ueImpairment * 0.6);
-        totalElement.textContent = `${ueImpairment} UE = ${wpi} WPI`;
-    } else {
-        totalElement.textContent = '0 UE = 0 WPI';
-    }
-}
-    
         function updateTotalShoulderStrengthImpairment() {
             const movements = ['flexion', 'extension', 'abduction', 'adduction', 'internal-rotation', 'external-rotation'];
             let totalUEImpairment = 0;
@@ -1413,9 +1309,7 @@ function findImpairment(angle, dataArray, angleField) {
             console.log("Finalize Impairment button clicked");
             // Implement finalization logic here
         });
-    
     });
-    
     </script>
 </body>
 </html>
