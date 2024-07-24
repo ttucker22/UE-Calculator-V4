@@ -1180,6 +1180,9 @@ function showCalculators() {
                             </div>
                             <p class="total-impairment"><strong>Total: <span id="shoulder-instability-total">0 UE = 0 WPI</span></strong></p>
                         `;
+                        calculatorCard.querySelectorAll('input[name="shoulder-instability"]').forEach(option => {
+                            option.addEventListener('change', calculateShoulderInstability);
+                        });
                     } else {
                         calculatorCard.innerHTML = `
                             <h3>${cardValue.charAt(0).toUpperCase() + cardValue.slice(1)} - ${option}</h3>
