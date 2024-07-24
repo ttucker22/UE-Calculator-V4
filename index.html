@@ -1290,6 +1290,20 @@ function calculateShoulderROM() {
             }
         }
 
+        function calculateShoulderInstability() {
+            console.log("calculateShoulderInstability function called");
+            const selectedOption = document.querySelector('input[name="shoulder-instability"]:checked');
+            const totalElement = document.getElementById('shoulder-instability-total');
+            
+            if (selectedOption) {
+                const ueImpairment = parseInt(selectedOption.value);
+                const wpi = Math.round(ueImpairment * 0.6);
+                totalElement.textContent = `${ueImpairment} UE = ${wpi} WPI`;
+            } else {
+                totalElement.textContent = '0 UE = 0 WPI';
+            }
+        }
+
         function updateTotalShoulderStrengthImpairment() {
             const movements = ['flexion', 'extension', 'abduction', 'adduction', 'internal-rotation', 'external-rotation'];
             let totalUEImpairment = 0;
