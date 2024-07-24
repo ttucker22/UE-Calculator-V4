@@ -164,6 +164,59 @@
             color: #1E90FF;
             font-weight: bold;
         }
+                .instability-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .instability-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #1E90FF;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+        .instability-option:hover {
+            background-color: #F0F8FF;
+        }
+        .instability-option input[type="radio"] {
+            display: none;
+        }
+        .instability-option label {
+            cursor: pointer;
+            padding-left: 25px;
+            position: relative;
+            width: 100%;
+        }
+        .instability-option label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            border: 2px solid #1E90FF;
+            border-radius: 50%;
+        }
+        .instability-option input[type="radio"]:checked + label::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background-color: #1E90FF;
+            border-radius: 50%;
+        }
+        .instability-option input[type="radio"]:checked + label {
+            color: #1E90FF;
+            font-weight: bold;
+        }
         .total-impairment {
             font-weight: bold;
             margin-top: 10px;
