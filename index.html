@@ -164,59 +164,6 @@
             color: #1E90FF;
             font-weight: bold;
         }
-                .instability-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .instability-option {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border: 1px solid #1E90FF;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            background-color: white;
-        }
-        .instability-option:hover {
-            background-color: #F0F8FF;
-        }
-        .instability-option input[type="radio"] {
-            display: none;
-        }
-        .instability-option label {
-            cursor: pointer;
-            padding-left: 25px;
-            position: relative;
-            width: 100%;
-        }
-        .instability-option label::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 18px;
-            height: 18px;
-            border: 2px solid #1E90FF;
-            border-radius: 50%;
-        }
-        .instability-option input[type="radio"]:checked + label::after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
-            background-color: #1E90FF;
-            border-radius: 50%;
-        }
-        .instability-option input[type="radio"]:checked + label {
-            color: #1E90FF;
-            font-weight: bold;
-        }
         .total-impairment {
             font-weight: bold;
             margin-top: 10px;
@@ -225,8 +172,6 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Upper Extremity Impairment Calculator</h1>
     <div class="container">
         <h1>Upper Extremity Impairment Calculator</h1>
         <div class="card-container">
@@ -262,9 +207,6 @@
     </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        console.log("DOM fully loaded");
-                
 // Shoulder Joint Flexion & Extension data
 const SHOULDERFlexionExtensionData = [
     { flexion: '>180', ueFlexion: 0, extension: '<-180', ueExtension: 30, ankylosis: '>180', ueAnkylosis: 30 },
@@ -1011,16 +953,16 @@ const SHOULDERInternalExternalRotationData = [
             }
         });
 
-        function showCalculators() {
-            console.log("Showing calculators");
-            optionsContainer.style.display = 'none';
-            calculatorsContainer.style.display = 'block';
-            calculatorsList.innerHTML = '';
-            
-            for (const [cardValue, options] of Object.entries(selectedOptions)) {
-                options.forEach(option => {
-                    const calculatorCard = document.createElement('div');
-                    calculatorCard.classList.add('calculator-card');
+function showCalculators() {
+    console.log("Showing calculators");
+    optionsContainer.style.display = 'none';
+    calculatorsContainer.style.display = 'block';
+    calculatorsList.innerHTML = '';
+    
+    for (const [cardValue, options] of Object.entries(selectedOptions)) {
+        options.forEach(option => {
+            const calculatorCard = document.createElement('div');
+            calculatorCard.classList.add('calculator-card');
             if (cardValue === 'shoulder' && option === 'ROM') {
                 calculatorCard.innerHTML = `
                     <h3>Shoulder - ROM</h3>
@@ -1166,27 +1108,19 @@ const SHOULDERInternalExternalRotationData = [
                             </div>
                             <p class="total-impairment"><strong>Total: <span id="shoulder-arthroplasty-total">0 UE = 0 WPI</span></strong></p>
                         `;
-                    else if (cardValue === 'shoulder' && option === 'Instability/Subluxation/Dislocation') {
+                    } else {
                         calculatorCard.innerHTML = `
-                            <h3>Shoulder - Instability/Subluxation/Dislocation</h3>
-                            <div class="instability-options">
-                                <div class="instability-option" data-value="6">
-                                    <input type="radio" id="class-1-instability" name="shoulder-instability" value="6">
-                                    <label for="class-1-instability">Class 1 - Occult Instability (6 UE)</label>
-                                </div>
-                                <div class="instability-option" data-value="12">
-                                    <input type="radio" id="class-2-instability" name="shoulder-instability" value="12">
-                                    <label for="class-2-instability">Class 2 - Subluxating Humeral Head (12 UE)</label>
-                                </div>
-                                <div class="instability-option" data-value="24">
-                                    <input type="radio" id="class-3-instability" name="shoulder-instability" value="24">
-                                    <label for="class-3-instability">Class 3 - Dislocating Humeral Head (24 UE)</label>
-                                </div>
+                            <h3>${cardValue.charAt(0).toUpperCase() + cardValue.slice(1)} - ${option}</h3>
+                            <div class="input-group">
+                                <label for="${cardValue}-${option}-impairment">Impairment (%):</label>
+                                <input type="number" id="${cardValue}-${option}-impairment" min="0" max="100" step="0.1">
                             </div>
-                            <p class="total-impairment"><strong>Total: <span id="shoulder-instability-total">0 UE = 0 WPI</span></strong></p>
+                            <div class="input-group">
+                                <label for="${cardValue}-${option}-comments">Comments:</label>
+                                <input type="text" id="${cardValue}-${option}-comments">
+                            </div>
                         `;
                     }
-                    
                     calculatorsList.appendChild(calculatorCard);
                 });
             }
@@ -1234,17 +1168,6 @@ function setupCalculatorEventListeners() {
             }
         }
 
-            if (selectedOptions.shoulder && selectedOptions.shoulder.includes('Instability/Subluxation/Dislocation')) {
-                console.log("Setting up instability event listeners");
-                const instabilityOptions = document.querySelectorAll('input[name="shoulder-instability"]');
-                console.log("Number of instability options found:", instabilityOptions.length);
-                instabilityOptions.forEach(option => {
-                    option.addEventListener('change', calculateShoulderInstability);
-                    console.log("Added event listener to option:", option.value);
-                });
-            }
-        }
-
 function calculateShoulderROM() {
     console.log("Calculating Shoulder ROM");
     updateShoulderImpairment();
@@ -1274,20 +1197,6 @@ function calculateShoulderROM() {
             console.log("calculateShoulderArthroplasty function called");
             const selectedOption = document.querySelector('input[name="shoulder-arthroplasty"]:checked');
             const totalElement = document.getElementById('shoulder-arthroplasty-total');
-            
-            if (selectedOption) {
-                const ueImpairment = parseInt(selectedOption.value);
-                const wpi = Math.round(ueImpairment * 0.6);
-                totalElement.textContent = `${ueImpairment} UE = ${wpi} WPI`;
-            } else {
-                totalElement.textContent = '0 UE = 0 WPI';
-            }
-        }
-
-        function calculateShoulderInstability() {
-            console.log("calculateShoulderInstability function called");
-            const selectedOption = document.querySelector('input[name="shoulder-instability"]:checked');
-            const totalElement = document.getElementById('shoulder-instability-total');
             
             if (selectedOption) {
                 const ueImpairment = parseInt(selectedOption.value);
