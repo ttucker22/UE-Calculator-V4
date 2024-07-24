@@ -1229,6 +1229,17 @@ function setupCalculatorEventListeners() {
                 });
             }
 
+            if (selectedOptions.shoulder && selectedOptions.shoulder.includes('Instability/Subluxation/Dislocation')) {
+                console.log("Setting up instability event listeners");
+                const instabilityOptions = document.querySelectorAll('input[name="shoulder-instability"]');
+                console.log("Number of instability options found:", instabilityOptions.length);
+                instabilityOptions.forEach(option => {
+                    option.addEventListener('change', calculateShoulderInstability);
+                    console.log("Added event listener to option:", option.value);
+                    }
+                });
+            }
+
             if (selectedOptions.shoulder && selectedOptions.shoulder.includes('Arthroplasty')) {
                 console.log("Setting up arthroplasty event listeners");
                 const arthroplastyOptions = document.querySelectorAll('input[name="shoulder-arthroplasty"]');
@@ -1239,17 +1250,6 @@ function setupCalculatorEventListeners() {
                 });
             }
         } 
-
-                    if (selectedOptions.shoulder && selectedOptions.shoulder.includes('Instability/Subluxation/Dislocation')) {
-                console.log("Setting up instability event listeners");
-                const instabilityOptions = document.querySelectorAll('input[name="shoulder-instability"]');
-                console.log("Number of instability options found:", instabilityOptions.length);
-                instabilityOptions.forEach(option => {
-                    option.addEventListener('change', calculateShoulderInstability);
-                    console.log("Added event listener to option:", option.value);
-                });
-            }
-        }
 
 function calculateShoulderROM() {
     console.log("Calculating Shoulder ROM");
